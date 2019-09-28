@@ -8,7 +8,7 @@ import bodyParser from 'body-parser'
 
 import { buildSchema } from 'graphql'
 import { root } from './resolvers/root-resolver'
-import AuthenticateRoute from './authentication/authenticate'
+import AuthenticateRoute from './authentication/api.auth'
 
 // Import schema
 const typeDefs = importSchema('schema/schema.graphql')

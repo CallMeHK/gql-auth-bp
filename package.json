@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev index.ts --ignore-watch client",
-    "test": "jest"
+    "test": "jest",
+    "test-watch": "jest --watchAll --verbose"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",

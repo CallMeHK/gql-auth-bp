@@ -6,13 +6,16 @@ export interface IVerifyRequestFactory {
 
 const verifyRequestFactory = (dependencies: IVerifyRequestFactory) => {
   const { verifyJwt } = dependencies;
-  return ({ headers }: { headers: any }): IJwtVerifyResponse => {
+  return <T>(
+    { headers }: { headers: any },
+    callback: (payload?: IJwtVerifyResponse) => T
+  ): IJwtVerifyResponse | T => {
     const { token } = headers;
     const payload = verifyJwt(token);
     if (!payload.success) {
-      throw "Could not authenticate user";
+      return payload;
     }
-    return payload;
+    return callback(payload);
   };
 };
 

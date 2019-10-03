@@ -7,3 +7,7 @@ type Query {
 type Query {
   authGetPgTime: AuthGetPgTime
 }
+
+type Query {
+  userInfo: UserInfo
+}

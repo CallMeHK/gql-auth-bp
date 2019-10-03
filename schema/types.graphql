@@ -7,3 +7,15 @@ type AuthGetPgTime {
     error: String,
     data: TimeData
 }
+
+type UserInfo {
+  success: Boolean,
+  error: String,
+  data: UserData
+}
+
+type UserData {
+  id: Int,
+  name: String,
+  iat: Int,
+}

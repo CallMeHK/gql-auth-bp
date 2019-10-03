@@ -1,5 +1,6 @@
 import { verifyJwt, IJwtVerifyResponse } from "./jwt.service";
 import cookie from 'cookie'
+import { IContext } from "../resolver-factories/postgres/make-query";
 
 export interface IVerifyRequestFactory {
   verifyJwt: typeof verifyJwt;
@@ -7,6 +8,20 @@ export interface IVerifyRequestFactory {
 
 export interface ICookies {
   token?: string
+}
+
+export interface IUserInfoFactory {
+  verifyRequest: typeof verifyRequest
+}
+
+export interface IUserInfoResponse {
+  success: boolean,
+  error?: string,
+  data?: {
+    id: number,
+    name: string,
+    iat: number
+  }
 }
 
 const verifyRequestFactory = (dependencies: IVerifyRequestFactory) => {
@@ -26,4 +41,24 @@ const verifyRequestFactory = (dependencies: IVerifyRequestFactory) => {
 
 const verifyRequest = verifyRequestFactory({ verifyJwt });
 
-export { verifyRequest, verifyRequestFactory };
+const parseUserInfo = (payload: IJwtVerifyResponse) =>
+  ({
+    success: payload.success,
+    error: payload.error,
+    data: {
+      id: payload.id,
+      name: payload.name,
+      iat: payload.iat
+    }
+  })
+
+const userInfoFactory = (dependencies: IUserInfoFactory) => {
+  const { verifyRequest } = dependencies
+  return (_: any, context: IContext): IUserInfoResponse => {
+    return verifyRequest<IUserInfoResponse>(context, parseUserInfo)
+  }
+}
+
+const userInfo = userInfoFactory({ verifyRequest })
+
+export { verifyRequest, verifyRequestFactory, userInfo };

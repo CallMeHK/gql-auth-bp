@@ -20,14 +20,22 @@ const AuthenticateRouteFactory = (dependencies: IAuthRouteFactory) => {
   return async (req: IAuthRequest, res: Response, next: NextFunction) => {
     const { userName, password } = req.body
     const authResponse = await authRequest(userName, password)
+    res.cookie('token', authResponse.token)
     res.json(authResponse)
   }
 }
 
+const LogOutRoute = (req: Request, res: Response, next: NextFunction) => {
+  res.clearCookie('token')
+  res.json({
+    success: true
+  })
+}
 const AuthenticateRoute = AuthenticateRouteFactory({ authenticateUser, createPgPool })
 
 export default AuthenticateRoute
 
 export {
-  AuthenticateRouteFactory
+  AuthenticateRouteFactory,
+  LogOutRoute
 }

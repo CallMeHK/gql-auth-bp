@@ -30,7 +30,7 @@ const signJwt = signJwtFactory({ jwt, secret: process.env.JWT_SECRET })
 
 const verifyJwtFactory = (dependencies: IJwtFactory) => {
   const { jwt, secret } = dependencies
-  return ({ token }: { token: string }): IJwtVerifyResponse => {
+  return ({ token }: { token?: string }): IJwtVerifyResponse => {
     let res: IJwtVerifyResponse
     jwt.verify(token, secret, (err, decoded: object) => {
       res = err ? { success: false, error: err.message } : { success: true, ...decoded }

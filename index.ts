@@ -8,7 +8,7 @@ import bodyParser from 'body-parser'
 
 import { buildSchema } from 'graphql'
 import { root } from './resolvers/root-resolver'
-import AuthenticateRoute from './authentication/api.auth'
+import AuthenticateRoute, {LogOutRoute} from './authentication/api.auth'
 
 // Import schema
 const typeDefs = importSchema('schema/schema.graphql')
@@ -21,6 +21,8 @@ var app = express();
 app.use(bodyParser.json())
 
 app.post('/auth', AuthenticateRoute)
+
+app.get('/logout', LogOutRoute)
 
 app.use('/graphql', graphqlHTTP({
   schema: schema,

@@ -1,3 +1,9 @@
+# import * from 'types.graphql'
+
 type Query {
-  getPgTime: String
+  getPgTime: AuthGetPgTime
+}
+
+type Query {
+  authGetPgTime: AuthGetPgTime
 }

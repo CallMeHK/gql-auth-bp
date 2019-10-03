@@ -1,1 +1,9 @@
-# TODO
+type TimeData {
+  time: String
+}
+
+type AuthGetPgTime {
+    success: Boolean!,
+    error: String,
+    data: TimeData
+}

@@ -1,7 +1,12 @@
 import { verifyJwt, IJwtVerifyResponse } from "./jwt.service";
+import cookie from 'cookie'
 
 export interface IVerifyRequestFactory {
   verifyJwt: typeof verifyJwt;
+}
+
+export interface ICookies {
+  token?: string
 }
 
 const verifyRequestFactory = (dependencies: IVerifyRequestFactory) => {
@@ -10,8 +15,8 @@ const verifyRequestFactory = (dependencies: IVerifyRequestFactory) => {
     { headers }: { headers: any },
     callback: (payload?: IJwtVerifyResponse) => T
   ): IJwtVerifyResponse | T => {
-    const { token } = headers;
-    const payload = verifyJwt(token);
+    const cookies = cookie.parse(headers.cookie) as ICookies
+    const payload = verifyJwt(cookies);
     if (!payload.success) {
       return payload;
     }

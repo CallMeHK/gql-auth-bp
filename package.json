@@ -18,7 +18,7 @@
     "@types/node": "^12.7.2",
     "@types/pg": "^7.11.0",
     "@types/ramda": "github:types/npm-ramda#dist",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cookie": "^0.4.0",
     "dotenv": "^8.1.0",
